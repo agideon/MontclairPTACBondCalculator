@@ -1,0 +1,111 @@
+<Html>
+<Head>
+  <Style>
+    table { border: 1px solid red; width: 80%; align: center; }
+    tr { border: 1px solid green; }
+    th { border: 1px solid blue; }
+    td { border: 1px solid green; text-align: center; }
+  </Style>
+</Head>
+<Body BGColor="White">
+
+
+<P>
+An average home in Montclair assessed at <span id="avgHomeValue"></span>
+will see a tax increase of 
+$258
+in 
+2023 
+and an average tax increase of
+$732 by
+2027
+</P>
+
+<P>
+My home is assessed at 
+<Input Type="number" id="myHomeValue" value="0">
+<button id="dowork">Compute</button>
+</P>
+<P>
+I will see addition tax for each year of:
+<Table id="annualCosts">
+</Table>
+</P>
+
+
+
+<script>
+  // Average house value
+  const avgHomeValue = 628952;
+  let tranches = [ 
+	{firstYear: 2022, years: 20, amount: 100}, 
+	{firstYear: 2024, years: 20, amount: 300}, 
+	{firstYear: 2026, years: 20, amount: 500}, 
+	];
+
+
+  const moneyFormat = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+  let annualCost = new Map();
+  function addToCost(year, amount)
+  {
+    if (annualCost.has(year))
+    {
+      annualCost.set(year, annualCost.get(year) + amount)
+    }
+    else
+    {
+      annualCost.set(year, amount)
+    }
+  }
+
+  function buildCostTable()
+  {
+    for (const tranch of tranches)
+    {
+      for (let year = tranch.firstYear; year < (tranch.firstYear + tranch.years); year++)
+      {
+        addToCost(year, tranch.amount);
+      }
+    }
+  }
+
+  function displayAnnualCosts()
+  {
+    let table = document.getElementById("annualCosts");
+    const myHomeValue = document.getElementById("myHomeValue").value; // Is this a number?
+    const ratio = myHomeValue / avgHomeValue; // Is this a number?
+
+    table.innerHTML = "<TR><TH>Year<TH>Amount</TR>"; // Header for table
+
+    for (const [year, amount] of annualCost)
+    {
+        // Should test the product of amount and ratio for isNaN()
+	table.innerHTML += "<TR><TD>" + year.toString() + "<TD>" + moneyFormat.format(amount * ratio) + "<\TR>";
+    }
+  }
+
+  function populateInitialValues()
+  {
+    buildCostTable();
+
+
+    let avgHomeValueElement = document.getElementById("avgHomeValue");
+    avgHomeValueElement.innerHTML = moneyFormat.format(avgHomeValue);
+
+    let myHomeValueElement = document.getElementById("myHomeValue");
+    myHomeValueElement.value = avgHomeValue;
+
+    displayAnnualCosts();
+  }
+  document.addEventListener("DOMContentLoaded", populateInitialValues);
+
+  let dowork = document.getElementById("dowork");
+  dowork.onclick = function() 
+  {
+    displayAnnualCosts();
+  }
+</script>
+
+
+</Body>
+</Html>
