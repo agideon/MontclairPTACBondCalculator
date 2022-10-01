@@ -69,10 +69,10 @@ I will see addition tax for each year of:
     }
   }
 
-  function displayAnnualCosts()
+  function displayAnnualCosts(homeValueElementName, targetElementName)
   {
-    let table = document.getElementById("annualCosts");
-    const myHomeValue = document.getElementById("myHomeValue").value; // Is this a number?
+    let table = document.getElementById(targetElementName);
+    const myHomeValue = document.getElementById(homeValueElementName).value; // Is this a number?
     const ratio = myHomeValue / avgHomeValue; // Is this a number?
 
     table.innerHTML = "<TR><TH>Year<TH>Amount</TR>"; // Header for table
@@ -84,25 +84,26 @@ I will see addition tax for each year of:
     }
   }
 
-  function populateInitialValues()
+  function populateInitialValues(avgHomeValueElementName, homeValueElementName, targetElementName)
   {
     buildCostTable();
 
 
-    let avgHomeValueElement = document.getElementById("avgHomeValue");
+    let avgHomeValueElement = document.getElementById(avgHomeValueElementName);
     avgHomeValueElement.innerHTML = moneyFormat.format(avgHomeValue);
 
-    let myHomeValueElement = document.getElementById("myHomeValue");
+    let myHomeValueElement = document.getElementById(homeValueElementName);
     myHomeValueElement.value = avgHomeValue;
 
-    displayAnnualCosts();
+    displayAnnualCosts(homeValueElementName, targetElementName);
   }
-  document.addEventListener("DOMContentLoaded", populateInitialValues);
+
+  document.addEventListener("DOMContentLoaded", () => populateInitialValues("avgHomeValue", "myHomeValue", "annualCosts"));
 
   let dowork = document.getElementById("dowork");
   dowork.onclick = function() 
   {
-    displayAnnualCosts();
+    displayAnnualCosts("myHomeValue", "annualCosts");
   }
 </script>
 
