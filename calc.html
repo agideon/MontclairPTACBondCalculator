@@ -45,6 +45,8 @@ I will see addition tax for each year of:
 <script>
   // Average house value
   const avgHomeValue = 628952;
+
+  // Table of payments based upon expected bond sales
   let tranches = [ 
 	{firstYear: 2022, years: 20, amount: 100}, 
 	{firstYear: 2024, years: 20, amount: 300}, 
@@ -54,20 +56,26 @@ I will see addition tax for each year of:
 
   const moneyFormat = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
   let annualCost = new Map();
-  function addToCost(year, amount)
-  {
-    if (annualCost.has(year))
-    {
-      annualCost.set(year, annualCost.get(year) + amount)
-    }
-    else
-    {
-      annualCost.set(year, amount)
-    }
-  }
 
+  // From the tranches, determine each year's costs
   function buildCostTable()
   {
+
+    // Add a given amount to what is to be paid each year.
+    function addToCost(year, amount)
+    {
+      if (annualCost.has(year))
+      {
+        annualCost.set(year, annualCost.get(year) + amount)
+      }
+      else
+      {
+        annualCost.set(year, amount)
+      }
+    }
+
+    // Look over each tranche, adding the amount owed for a given year to 
+    // that year's total.
     for (const tranch of tranches)
     {
       for (let year = tranch.firstYear; year < (tranch.firstYear + tranch.years); year++)
@@ -77,6 +85,7 @@ I will see addition tax for each year of:
     }
   }
 
+  // Display a table of bond repayments
   function displayAnnualCosts(homeValueElementName, targetElementName)
   {
     let table = document.getElementById(targetElementName);
@@ -92,17 +101,21 @@ I will see addition tax for each year of:
     }
   }
 
+  // Set up initial values: Average home value, payment tables, etc.
   function populateInitialValues(avgHomeValueElementName, homeValueElementName, targetElementName)
   {
-    buildCostTable();
+    buildCostTable(); // From the tranche sales, determine annual payments for average home
 
 
+    // Put average home price on the page
     let avgHomeValueElement = document.getElementById(avgHomeValueElementName);
     avgHomeValueElement.innerHTML = moneyFormat.format(avgHomeValue);
 
+    // Set the initial value of "my home value" to the average home price
     let myHomeValueElement = document.getElementById(homeValueElementName);
     myHomeValueElement.value = avgHomeValue;
 
+    // Display initial payment table
     displayAnnualCosts(homeValueElementName, targetElementName);
   }
 
