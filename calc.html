@@ -32,7 +32,15 @@ I will see addition tax for each year of:
 </Table>
 </P>
 
+<script>
+  document.addEventListener("DOMContentLoaded", () => populateInitialValues("avgHomeValue", "myHomeValue", "annualCosts"));
 
+  let dowork = document.getElementById("dowork");
+  dowork.onclick = function() 
+  {
+    displayAnnualCosts("myHomeValue", "annualCosts");
+  }
+</script>
 
 <script>
   // Average house value
@@ -98,13 +106,6 @@ I will see addition tax for each year of:
     displayAnnualCosts(homeValueElementName, targetElementName);
   }
 
-  document.addEventListener("DOMContentLoaded", () => populateInitialValues("avgHomeValue", "myHomeValue", "annualCosts"));
-
-  let dowork = document.getElementById("dowork");
-  dowork.onclick = function() 
-  {
-    displayAnnualCosts("myHomeValue", "annualCosts");
-  }
 </script>
 
 
