@@ -31,10 +31,16 @@ I will see addition tax for each year of:
 <Table id="annualCosts">
 </Table>
 </P>
+<P>
+This is based upon expected bond sales:
+<Table id="bondSales">
+</Table>
+
 
 <script>
   // This is the code which may be changed to "fit" with the HTML
-  document.addEventListener("DOMContentLoaded", () => populateInitialValues("avgHomeValue", "myHomeValue", "annualCosts"));
+  document.addEventListener("DOMContentLoaded", () => populateInitialValues("avgHomeValue", "myHomeValue", 
+								            "annualCosts", "bondSales"));
 
   let dowork = document.getElementById("dowork");
   dowork.onclick = function() 
@@ -122,11 +128,26 @@ I will see addition tax for each year of:
     }
   }
 
+
+  // Display the table of expected bond sales
+  function displayTranches(targetElementName)
+  {
+    let table = document.getElementById(targetElementName);
+    table.innerHTML = "<TH>Year<TH>Duration of Bonds<TH>Annual Increase for Repayment";
+    for (const tranch of tranches)
+    {
+      table.innerHTML += "<TR><TD>" + tranch.firstYear.toString() +
+		"<TD>" + tranch.years.toString() +
+		"<TD>" + moneyFormat.format(tranch.amount) +
+		"</TR>";
+    }  
+}
+
+
   // Set up initial values: Average home value, payment tables, etc.
-  function populateInitialValues(avgHomeValueElementName, homeValueElementName, targetElementName)
+  function populateInitialValues(avgHomeValueElementName, homeValueElementName, targetElementName, bondSalesElementName)
   {
     buildCostTable(); // From the tranche sales, determine annual payments for average home
-
 
     // Put average home price on the page
     let avgHomeValueElement = document.getElementById(avgHomeValueElementName);
@@ -138,6 +159,9 @@ I will see addition tax for each year of:
 
     // Display initial payment table
     displayAnnualCosts(homeValueElementName, targetElementName);
+
+    // Display expected bond sales
+    displayTranches(bondSalesElementName);
   }
 
 </script>
