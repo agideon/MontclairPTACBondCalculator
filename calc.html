@@ -33,6 +33,7 @@ I will see addition tax for each year of:
 </P>
 
 <script>
+  // This is the code which may be changed to "fit" with the HTML
   document.addEventListener("DOMContentLoaded", () => populateInitialValues("avgHomeValue", "myHomeValue", "annualCosts"));
 
   let dowork = document.getElementById("dowork");
@@ -43,7 +44,9 @@ I will see addition tax for each year of:
 </script>
 
 <script>
-  
+  // These are values which aren't code, but which are subject to 
+  // change.
+
   const avgHomeValue = 628952; // Average house value
   const coffeeCost = 1.50; // Cost of a cup of coffee
 
@@ -53,6 +56,15 @@ I will see addition tax for each year of:
 	{firstYear: 2024, years: 20, amount: 300}, 
 	{firstYear: 2026, years: 20, amount: 500}, 
 	];
+
+
+</script>
+
+
+<script>
+  // This is mostly HTML-free, with the exception of the header of the table.
+  // I left that in here because that is coupled with the content of the table.
+  // That is: change the table's columns and the header must also be changed.  
 
 
   const moneyFormat = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
