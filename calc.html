@@ -43,8 +43,9 @@ I will see addition tax for each year of:
 </script>
 
 <script>
-  // Average house value
-  const avgHomeValue = 628952;
+  
+  const avgHomeValue = 628952; // Average house value
+  const coffeeCost = 1.50; // Cost of a cup of coffee
 
   // Table of payments based upon expected bond sales
   let tranches = [ 
@@ -55,6 +56,7 @@ I will see addition tax for each year of:
 
 
   const moneyFormat = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+  const coffeeFormat = new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 });
   let annualCost = new Map();
 
   // From the tranches, determine each year's costs
@@ -92,12 +94,19 @@ I will see addition tax for each year of:
     const myHomeValue = document.getElementById(homeValueElementName).value; // Is this a number?
     const ratio = myHomeValue / avgHomeValue; // Is this a number?
 
-    table.innerHTML = "<TR><TH>Year<TH>Amount</TR>"; // Header for table
+    table.innerHTML = "<TR><TH>Year<TH>Amount<TH>Daily Amount<TH>Cups of Coffee</TR>"; // Header for table
 
     for (const [year, amount] of annualCost)
     {
         // Should test the product of amount and ratio for isNaN()
-	table.innerHTML += "<TR><TD>" + year.toString() + "<TD>" + moneyFormat.format(amount * ratio) + "<\TR>";
+	annualAmount = amount * ratio;
+	dailyAmount = annualAmount / 365;
+	coffeeAmount = dailyAmount / coffeeCost;
+	table.innerHTML += "<TR><TD>" + year.toString() + 
+		"<TD>" + moneyFormat.format(annualAmount) + 
+		"<TD>" + moneyFormat.format(dailyAmount) + 
+		"<TD>" + coffeeFormat.format(coffeeAmount) + 
+		"<\TR>";
     }
   }
 
