@@ -185,16 +185,11 @@ This is based upon expected bond sales:
         // tranch.amount
 	data.set(year, tranch.amount);
       }
-//      console.log("Set a data to: " + JSON.stringify(Object.fromEntries(data)));
       thisDataSet.set('data', Object.fromEntries(data));
-//      console.log("dataset now: " + JSON.stringify(Object.fromEntries(thisDataSet)));
       chartDatasets.push(Object.fromEntries(thisDataSet));
-//      console.log("chartDataSets now: " + JSON.stringify(chartDatasets));
     }
     chartData.set('datasets', chartDatasets);
-    console.log("chart data: " + JSON.stringify(Object.fromEntries(chartData)))
     chartConfig.data = Object.fromEntries(chartData);
-    console.log("chart config: " + JSON.stringify(chartConfig))
     document.getElementById("paymentChart").chart.clear();
     document.getElementById("paymentChart").chart.destroy();
     const paymentChart = new Chart(document.getElementById("paymentChart"), chartConfig);
@@ -205,31 +200,6 @@ This is based upon expected bond sales:
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    const chartDataOld = 
-    {
-    datasets: 
-            [ 
-              {
-                backgroundColor: 'rgba(255,0,0,0.5)',
-                data:
-                  { 
-                    2022: 100, 
-                    2023: 120, 
-                    2024: 130,
-                  },
-              },
-              {
-                backgroundColor: 'rgba(0,255,0,0.5)',
-                data:
-                  { 
-                    2022: 200, 
-                    2023: 220, 
-                    2024: 230,
-                  },
-               },
-            ], 
-    };
-
     function formatYLabels(val, index, ticks)
     {
        return(moneyFormat.format(val));
