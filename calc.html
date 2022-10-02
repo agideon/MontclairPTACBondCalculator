@@ -11,23 +11,19 @@
 
 
 <P>
-An average home in Montclair assessed at <span id="avgHomeValue"></span>
-will see a tax increase of 
-$258
-in 
-2023 
-and an average tax increase of
-$732 by
-2027
-</P>
-
+This will provide an estimate of the change in your property tax payments based upon your
+home's value.  It starts with the average home value in Montclair, <span id="avgHomeValue"></span>,
+but you can enter your own value.
 <P>
-My home is assessed at 
+Because there is a limit to the amount of work we can schedule, fitting work in with the academic year, 
+the bond sale will not occur all at once.  There is a estimated schedule of tranche sales over the lifetime
+of the project, and this uses that schedule to determine the amounts needed for repayment.
+<P>
+For a home assessed at 
 <Input Type="number" id="myHomeValue" value="0">
-<button id="dowork">Compute</button>
+(<button id="dowork">Compute</button>), the expected change in property taxes for each year are as follows:
 </P>
 <P>
-I will see addition tax for each year of:
 <Table id="annualCosts">
 </Table>
 </P>
@@ -43,12 +39,16 @@ This is based upon expected bond sales:
   document.addEventListener("DOMContentLoaded", () => populateInitialValues("avgHomeValue", "myHomeValue", 
 								            "annualCosts", "bondSales", 
                                                                             "paymentChart"));
-  let dowork = document.getElementById("dowork");
-  dowork.onclick = function() 
+  function computeValues()
   {
     displayAnnualCosts("myHomeValue", "annualCosts"); // Display table of values
     buildChartData("myHomeValue", "paymentChart"); // Build graphical chart
   }
+
+  // What event(s) trigger computation:
+  document.getElementById("dowork").onclick = computeValues;
+  document.getElementById("myHomeValue").oninput = computeValues;
+
 </script>
 
 <script>
@@ -60,9 +60,9 @@ This is based upon expected bond sales:
 
   // Table of payments based upon expected bond sales
   let tranches = [ 
-	{firstYear: 2022, years: 20, amount: 100, label: "first tranche", color: "rgba(255,0,0,0.5)"}, 
-	{firstYear: 2024, years: 20, amount: 300, label: "second tranche", color: "rgba(0,255,0,0.5)"},
-	{firstYear: 2026, years: 20, amount: 500, label: "third tranche", color: "rgba(0,0,255,0.5)"}, 
+	{firstYear: 2022, years: 20, amount: 258, label: "first tranche", color: "rgba(255,0,0,0.5)"}, 
+	{firstYear: 2024, years: 20, amount: 237, label: "second tranche", color: "rgba(0,255,0,0.5)"},
+	{firstYear: 2026, years: 20, amount: 237, label: "third tranche", color: "rgba(0,0,255,0.5)"}, 
 	];
 
 
