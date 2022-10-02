@@ -172,22 +172,22 @@ This is based upon expected bond sales:
   }
 
 
-    function formatYLabels(val, index, ticks) // Control appearance of amounts on Y axis of graphical chart
-    {
-       return(moneyFormat.format(val));
-    }
+  function formatYLabels(val, index, ticks) // Control appearance of amounts on Y axis of graphical chart
+  {
+     return(moneyFormat.format(val));
+  }
 
-    // Static configuration of graphical chart
-    const chartConfig = 
-    {
-      type: 'bar',
-      options: { scales: 
-                 { 
-                   x: { stacked: true }, 
-                   y: { stacked: true, ticks: { callback: formatYLabels } }
-                 }
+  // Static configuration of graphical chart
+  const chartConfig = 
+  {
+    type: 'bar',
+    options: { scales: 
+               { 
+                 x: { stacked: true }, 
+                 y: { stacked: true, ticks: { callback: formatYLabels } }
                }
-    };
+             }
+  };
 
 
   // Build the dynamic data for the graphical chart and (re)display that chart
