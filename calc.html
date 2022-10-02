@@ -41,13 +41,14 @@ This is based upon expected bond sales:
 <script>
   // This is the code which may be changed to "fit" with the HTML
   document.addEventListener("DOMContentLoaded", () => populateInitialValues("avgHomeValue", "myHomeValue", 
-								            "annualCosts", "bondSales"));
+								            "annualCosts", "bondSales", 
+                                                                            "paymentChart"));
 
   let dowork = document.getElementById("dowork");
   dowork.onclick = function() 
   {
     displayAnnualCosts("myHomeValue", "annualCosts"); // Display table of values
-    buildChartData("myHomeValue"); // Build graphical chart
+    buildChartData("myHomeValue", "paymentChart"); // Build graphical chart
   }
 </script>
 
@@ -147,7 +148,8 @@ This is based upon expected bond sales:
 
 
   // Set up initial values: Average home value, payment tables, etc.
-  function populateInitialValues(avgHomeValueElementName, homeValueElementName, targetElementName, bondSalesElementName)
+  function populateInitialValues(avgHomeValueElementName, homeValueElementName, targetElementName, 
+                                 bondSalesElementName, chartDisplayElementName)
   {
     buildCostTable(); // From the tranche sales, determine annual payments for average home
 
@@ -166,15 +168,15 @@ This is based upon expected bond sales:
     displayTranches(bondSalesElementName);
 
     // Build initial graphical chart
-    buildChartData(homeValueElementName);
+    buildChartData(homeValueElementName, chartDisplayElementName);
   }
-</script>
 
-<script>
+
     function formatYLabels(val, index, ticks) // Control appearance of amounts on Y axis of graphical chart
     {
        return(moneyFormat.format(val));
     }
+
     // Static configuration of graphical chart
     const chartConfig = 
     {
@@ -188,9 +190,8 @@ This is based upon expected bond sales:
     };
 
 
-
-  // Build the dynamic data for the graphical chart
-  function buildChartData(homeValueElementName)
+  // Build the dynamic data for the graphical chart and (re)display that chart
+  function buildChartData(homeValueElementName, chartDisplayElementName)
   {
     let chartData = new Map();
     const myHomeValue = document.getElementById(homeValueElementName).value; // Is this a number?
@@ -212,13 +213,13 @@ This is based upon expected bond sales:
     }
     chartData.set('datasets', chartDatasets);
     chartConfig.data = Object.fromEntries(chartData);
-    if (document.getElementById("paymentChart").hasOwnProperty('chart')) // Cleanup previous canvas if exists
+    if (document.getElementById(chartDisplayElementName).hasOwnProperty('chart')) // Cleanup previous canvas if exists
     {
-      document.getElementById("paymentChart").chart.destroy();
+      document.getElementById(chartDisplayElementName).chart.destroy();
     }
     // Build the chart in the canvas with the specified id
-    const paymentChart = new Chart(document.getElementById("paymentChart"), chartConfig); 
-    document.getElementById("paymentChart").chart = paymentChart; // Store canvas for later cleanup
+    const paymentChart = new Chart(document.getElementById(chartDisplayElementName), chartConfig); 
+    document.getElementById(chartDisplayElementName).chart = paymentChart; // Store canvas for later cleanup
   }
 
 </script>
