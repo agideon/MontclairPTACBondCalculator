@@ -36,6 +36,7 @@ This is based upon expected bond sales:
 <Table id="bondSales">
 </Table>
 
+<P><canvas id="paymentChart"></canvas></P>
 
 <script>
   // This is the code which may be changed to "fit" with the HTML
@@ -164,6 +165,45 @@ This is based upon expected bond sales:
     displayTranches(bondSalesElementName);
   }
 
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const chartData = 
+    {
+    datasets: 
+            [ 
+              {
+                backgroundColor: 'rgba(255,0,0,0.5)',
+                data:
+                  { 
+                    2022: 100, 
+                    2023: 120, 
+                    2024: 130,
+                  },
+              },
+              {
+                backgroundColor: 'rgba(0,255,0,0.5)',
+                data:
+                  { 
+                    2022: 200, 
+                    2023: 220, 
+                    2024: 230,
+                  },
+               },
+            ], 
+    };
+
+    const chartConfig = 
+    {
+      type: 'bar',
+      data: chartData,
+      options: { scales: { x: { stacked: true }, y: { stacked: true } }}
+    };
+
+</script>
+<script>
+    const paymentChart = new Chart(document.getElementById("paymentChart"), chartConfig);
 </script>
 
 
