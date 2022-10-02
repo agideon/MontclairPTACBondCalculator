@@ -45,6 +45,7 @@ This is based upon expected bond sales:
   function computeValues()
   {
     displayAnnualCosts("myHomeValue", "annualCosts"); // Display table of values
+    displayTranches("myHomeValue", "bondSales"); // Display expected bond sales
     buildChartData("myHomeValue", "paymentChart"); // Build graphical chart
   }
 
@@ -113,18 +114,18 @@ This is based upon expected bond sales:
   // Display a table of bond repayments
   function displayAnnualCosts(homeValueElementName, targetElementName)
   {
-    let table = document.getElementById(targetElementName);
     const myHomeValue = document.getElementById(homeValueElementName).value; // Is this a number?
     const ratio = myHomeValue / avgHomeValue; // Is this a number?
 
+    let table = document.getElementById(targetElementName);
     table.innerHTML = "<TR><TH>Year<TH>Amount<TH>Daily Amount<TH>Cups of Coffee</TR>"; // Header for table
 
     for (const [year, amount] of annualCost)
     {
         // Should test the product of amount and ratio for isNaN()
-	annualAmount = amount * ratio;
-	dailyAmount = annualAmount / 365;
-	coffeeAmount = dailyAmount / coffeeCost;
+	let annualAmount = amount * ratio;
+	let dailyAmount = annualAmount / 365;
+	let coffeeAmount = dailyAmount / coffeeCost;
 	table.innerHTML += "<TR><TD>" + year.toString() + 
 		"<TD>" + moneyFormat.format(annualAmount) + 
 		"<TD>" + moneyFormat.format(dailyAmount) + 
@@ -135,17 +136,21 @@ This is based upon expected bond sales:
 
 
   // Display the table of expected bond sales
-  function displayTranches(targetElementName)
+  function displayTranches(homeValueElementName, targetElementName)
   {
+    const myHomeValue = document.getElementById(homeValueElementName).value; // Is this a number?
+    const ratio = myHomeValue / avgHomeValue; // Is this a number?
+
     let table = document.getElementById(targetElementName);
     table.innerHTML = "<TH><TH>Year of Sale<TH>Duration of Bonds<TH>Annual Increase for Repayment";
     for (const tranche of tranches)
     {
+      let amount = tranche.amount * ratio;
       table.innerHTML += "<TR style=\"color: " + tranche.color + ";\">" +
                 "<TD>" + tranche.label +
                 "<TD>" + tranche.firstYear.toString() +
 		"<TD>" + tranche.years.toString() +
-		"<TD>" + moneyFormat.format(tranche.amount) +
+		"<TD>" + moneyFormat.format(amount) +
 		"</TR>";
     }  
 }
@@ -169,7 +174,7 @@ This is based upon expected bond sales:
     displayAnnualCosts(homeValueElementName, targetElementName);
 
     // Display expected bond sales
-    displayTranches(bondSalesElementName);
+    displayTranches(homeValueElementName, bondSalesElementName);
 
     // Build initial graphical chart
     buildChartData(homeValueElementName, chartDisplayElementName);
