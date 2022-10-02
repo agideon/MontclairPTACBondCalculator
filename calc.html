@@ -39,9 +39,7 @@ This is based upon expected bond sales:
 
 <script>
   // This is the code which may be changed to "fit" with the HTML
-  document.addEventListener("DOMContentLoaded", () => populateInitialValues("avgHomeValue", "myHomeValue", 
-								            "annualCosts", "bondSales", 
-                                                                            "paymentChart"));
+  document.addEventListener("DOMContentLoaded", () => populateInitialValues("avgHomeValue", "myHomeValue"));
   function computeValues()
   {
     displayAnnualCosts("myHomeValue", "annualCosts"); // Display table of values
@@ -157,8 +155,7 @@ This is based upon expected bond sales:
 
 
   // Set up initial values: Average home value, payment tables, etc.
-  function populateInitialValues(avgHomeValueElementName, homeValueElementName, targetElementName, 
-                                 bondSalesElementName, chartDisplayElementName)
+  function populateInitialValues(avgHomeValueElementName, homeValueElementName)
   {
     buildCostTable(); // From the tranche sales, determine annual payments for average home
 
@@ -170,14 +167,9 @@ This is based upon expected bond sales:
     let myHomeValueElement = document.getElementById(homeValueElementName);
     myHomeValueElement.value = avgHomeValue;
 
-    // Display initial payment table
-    displayAnnualCosts(homeValueElementName, targetElementName);
-
-    // Display expected bond sales
-    displayTranches(homeValueElementName, bondSalesElementName);
-
-    // Build initial graphical chart
-    buildChartData(homeValueElementName, chartDisplayElementName);
+    // Do initial display, the same work that is done when a new home value
+    // is entered.
+    computeValues();
   }
 
 
