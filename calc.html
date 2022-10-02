@@ -46,8 +46,8 @@ This is based upon expected bond sales:
   let dowork = document.getElementById("dowork");
   dowork.onclick = function() 
   {
-    displayAnnualCosts("myHomeValue", "annualCosts");
-    buildChartData("myHomeValue");
+    displayAnnualCosts("myHomeValue", "annualCosts"); // Display table of values
+    buildChartData("myHomeValue"); // Build graphical chart
   }
 </script>
 
@@ -165,11 +165,12 @@ This is based upon expected bond sales:
     // Display expected bond sales
     displayTranches(bondSalesElementName);
 
+    // Build initial graphical chart
     buildChartData(homeValueElementName);
   }
 </script>
-<script>
 
+<script>
   let chartData = new Map();
   function buildChartData(homeValueElementName)
   {
@@ -192,10 +193,12 @@ This is based upon expected bond sales:
     }
     chartData.set('datasets', chartDatasets);
     chartConfig.data = Object.fromEntries(chartData);
-    document.getElementById("paymentChart").chart.clear();
-    document.getElementById("paymentChart").chart.destroy();
+    if (document.getElementById("paymentChart").hasOwnProperty('chart')) // Cleanup previous canvas if exists
+    {
+      document.getElementById("paymentChart").chart.destroy();
+    }
     const paymentChart = new Chart(document.getElementById("paymentChart"), chartConfig);
-    document.getElementById("paymentChart").chart = paymentChart;
+    document.getElementById("paymentChart").chart = paymentChart; // Store canvas for later cleanup
   }
 
 </script>
@@ -220,8 +223,8 @@ This is based upon expected bond sales:
 
 </script>
 <script>
-    const paymentChart = new Chart(document.getElementById("paymentChart"), chartConfig);
-    document.getElementById("paymentChart").chart = paymentChart;
+//    const paymentChart = new Chart(document.getElementById("paymentChart"), chartConfig);
+//    document.getElementById("paymentChart").chart = paymentChart;
 </script>
 
 
