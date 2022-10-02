@@ -47,7 +47,7 @@ This is based upon expected bond sales:
   dowork.onclick = function() 
   {
     displayAnnualCosts("myHomeValue", "annualCosts");
-    buildChartData();
+    buildChartData("myHomeValue");
   }
 </script>
 
@@ -165,14 +165,16 @@ This is based upon expected bond sales:
     // Display expected bond sales
     displayTranches(bondSalesElementName);
 
-    buildChartData();
+    buildChartData(homeValueElementName);
   }
 </script>
 <script>
 
   let chartData = new Map();
-  function buildChartData()
+  function buildChartData(homeValueElementName)
   {
+    const myHomeValue = document.getElementById(homeValueElementName).value; // Is this a number?
+    const ratio = myHomeValue / avgHomeValue; // Is this a number?
     let chartDatasets = [];
     for (const tranch of tranches)
     {
@@ -182,8 +184,8 @@ This is based upon expected bond sales:
       let data = new Map();
       for (let year = tranch.firstYear; year < (tranch.firstYear + tranch.years); year++)
       {
-        // tranch.amount
-	data.set(year, tranch.amount);
+        amount = tranch.amount * ratio;
+	data.set(year, amount);
       }
       thisDataSet.set('data', Object.fromEntries(data));
       chartDatasets.push(Object.fromEntries(thisDataSet));
