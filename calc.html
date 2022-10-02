@@ -47,6 +47,7 @@ This is based upon expected bond sales:
   dowork.onclick = function() 
   {
     displayAnnualCosts("myHomeValue", "annualCosts");
+    buildChartData();
   }
 </script>
 
@@ -59,9 +60,9 @@ This is based upon expected bond sales:
 
   // Table of payments based upon expected bond sales
   let tranches = [ 
-	{firstYear: 2022, years: 20, amount: 100}, 
-	{firstYear: 2024, years: 20, amount: 300}, 
-	{firstYear: 2026, years: 20, amount: 500}, 
+	{firstYear: 2022, years: 20, amount: 100, label: "first tranch", color: "rgba(255,0,0,0.5)"}, 
+	{firstYear: 2024, years: 20, amount: 300, label: "second tranch", color: "rgba(0,255,0,0.5)"},
+	{firstYear: 2026, years: 20, amount: 500, label: "third tranch", color: "rgba(0,0,255,0.5)"}, 
 	];
 
 
@@ -163,13 +164,48 @@ This is based upon expected bond sales:
 
     // Display expected bond sales
     displayTranches(bondSalesElementName);
+
+    buildChartData();
+  }
+</script>
+<script>
+
+  let chartData = new Map();
+  function buildChartData()
+  {
+    let chartDatasets = [];
+    for (const tranch of tranches)
+    {
+      let thisDataSet = new Map();
+      thisDataSet.set('backgroundColor', tranch.color);
+      thisDataSet.set('label', tranch.label);
+      let data = new Map();
+      for (let year = tranch.firstYear; year < (tranch.firstYear + tranch.years); year++)
+      {
+        // tranch.amount
+	data.set(year, tranch.amount);
+      }
+//      console.log("Set a data to: " + JSON.stringify(Object.fromEntries(data)));
+      thisDataSet.set('data', Object.fromEntries(data));
+//      console.log("dataset now: " + JSON.stringify(Object.fromEntries(thisDataSet)));
+      chartDatasets.push(Object.fromEntries(thisDataSet));
+//      console.log("chartDataSets now: " + JSON.stringify(chartDatasets));
+    }
+    chartData.set('datasets', chartDatasets);
+    console.log("chart data: " + JSON.stringify(Object.fromEntries(chartData)))
+    chartConfig.data = Object.fromEntries(chartData);
+    console.log("chart config: " + JSON.stringify(chartConfig))
+    document.getElementById("paymentChart").chart.clear();
+    document.getElementById("paymentChart").chart.destroy();
+    const paymentChart = new Chart(document.getElementById("paymentChart"), chartConfig);
+    document.getElementById("paymentChart").chart = paymentChart;
   }
 
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    const chartData = 
+    const chartDataOld = 
     {
     datasets: 
             [ 
@@ -204,6 +240,7 @@ This is based upon expected bond sales:
 </script>
 <script>
     const paymentChart = new Chart(document.getElementById("paymentChart"), chartConfig);
+    document.getElementById("paymentChart").chart = paymentChart;
 </script>
 
 
