@@ -230,11 +230,20 @@ This is based upon expected bond sales:
             ], 
     };
 
+    function formatYLabels(val, index, ticks)
+    {
+       return(moneyFormat.format(val));
+    }
     const chartConfig = 
     {
       type: 'bar',
       data: chartData,
-      options: { scales: { x: { stacked: true }, y: { stacked: true } }}
+      options: { scales: 
+                 { 
+                   x: { stacked: true }, 
+                   y: { stacked: true, ticks: { callback: formatYLabels } }
+                 }
+               }
     };
 
 </script>
