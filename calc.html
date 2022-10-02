@@ -61,9 +61,9 @@ This is based upon expected bond sales:
 
   // Table of payments based upon expected bond sales
   let tranches = [ 
-	{firstYear: 2022, years: 20, amount: 100, label: "first tranch", color: "rgba(255,0,0,0.5)"}, 
-	{firstYear: 2024, years: 20, amount: 300, label: "second tranch", color: "rgba(0,255,0,0.5)"},
-	{firstYear: 2026, years: 20, amount: 500, label: "third tranch", color: "rgba(0,0,255,0.5)"}, 
+	{firstYear: 2022, years: 20, amount: 100, label: "first tranche", color: "rgba(255,0,0,0.5)"}, 
+	{firstYear: 2024, years: 20, amount: 300, label: "second tranche", color: "rgba(0,255,0,0.5)"},
+	{firstYear: 2026, years: 20, amount: 500, label: "third tranche", color: "rgba(0,0,255,0.5)"}, 
 	];
 
 
@@ -99,11 +99,11 @@ This is based upon expected bond sales:
 
     // Look over each tranche, adding the amount owed for a given year to 
     // that year's total.
-    for (const tranch of tranches)
+    for (const tranche of tranches)
     {
-      for (let year = tranch.firstYear; year < (tranch.firstYear + tranch.years); year++)
+      for (let year = tranche.firstYear; year < (tranche.firstYear + tranche.years); year++)
       {
-        addToCost(year, tranch.amount);
+        addToCost(year, tranche.amount);
       }
     }
   }
@@ -137,13 +137,13 @@ This is based upon expected bond sales:
   {
     let table = document.getElementById(targetElementName);
     table.innerHTML = "<TH><TH>Year of Sale<TH>Duration of Bonds<TH>Annual Increase for Repayment";
-    for (const tranch of tranches)
+    for (const tranche of tranches)
     {
-      table.innerHTML += "<TR style=\"color: " + tranch.color + ";\">" +
-                "<TD>" + tranch.label +
-                "<TD>" + tranch.firstYear.toString() +
-		"<TD>" + tranch.years.toString() +
-		"<TD>" + moneyFormat.format(tranch.amount) +
+      table.innerHTML += "<TR style=\"color: " + tranche.color + ";\">" +
+                "<TD>" + tranche.label +
+                "<TD>" + tranche.firstYear.toString() +
+		"<TD>" + tranche.years.toString() +
+		"<TD>" + moneyFormat.format(tranche.amount) +
 		"</TR>";
     }  
 }
@@ -199,15 +199,15 @@ This is based upon expected bond sales:
     const myHomeValue = document.getElementById(homeValueElementName).value; // Is this a number?
     const ratio = myHomeValue / avgHomeValue; // Is this a number?
     let chartDatasets = [];
-    for (const tranch of tranches)
+    for (const tranche of tranches)
     {
       let thisDataSet = new Map();
-      thisDataSet.set('backgroundColor', tranch.color);
-      thisDataSet.set('label', tranch.label);
+      thisDataSet.set('backgroundColor', tranche.color);
+      thisDataSet.set('label', tranche.label);
       let data = new Map();
-      for (let year = tranch.firstYear; year < (tranch.firstYear + tranch.years); year++)
+      for (let year = tranche.firstYear; year < (tranche.firstYear + tranche.years); year++)
       {
-        amount = tranch.amount * ratio;
+        amount = tranche.amount * ratio;
 	data.set(year, amount);
       }
       thisDataSet.set('data', Object.fromEntries(data));
