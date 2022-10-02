@@ -171,9 +171,28 @@ This is based upon expected bond sales:
 </script>
 
 <script>
-  let chartData = new Map();
+    function formatYLabels(val, index, ticks) // Control appearance of amounts on Y axis of graphical chart
+    {
+       return(moneyFormat.format(val));
+    }
+    // Static configuration of graphical chart
+    const chartConfig = 
+    {
+      type: 'bar',
+      options: { scales: 
+                 { 
+                   x: { stacked: true }, 
+                   y: { stacked: true, ticks: { callback: formatYLabels } }
+                 }
+               }
+    };
+
+
+
+  // Build the dynamic data for the graphical chart
   function buildChartData(homeValueElementName)
   {
+    let chartData = new Map();
     const myHomeValue = document.getElementById(homeValueElementName).value; // Is this a number?
     const ratio = myHomeValue / avgHomeValue; // Is this a number?
     let chartDatasets = [];
@@ -197,7 +216,8 @@ This is based upon expected bond sales:
     {
       document.getElementById("paymentChart").chart.destroy();
     }
-    const paymentChart = new Chart(document.getElementById("paymentChart"), chartConfig);
+    // Build the chart in the canvas with the specified id
+    const paymentChart = new Chart(document.getElementById("paymentChart"), chartConfig); 
     document.getElementById("paymentChart").chart = paymentChart; // Store canvas for later cleanup
   }
 
@@ -205,22 +225,6 @@ This is based upon expected bond sales:
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    function formatYLabels(val, index, ticks)
-    {
-       return(moneyFormat.format(val));
-    }
-    const chartConfig = 
-    {
-      type: 'bar',
-      data: chartData,
-      options: { scales: 
-                 { 
-                   x: { stacked: true }, 
-                   y: { stacked: true, ticks: { callback: formatYLabels } }
-                 }
-               }
-    };
-
 </script>
 <script>
 //    const paymentChart = new Chart(document.getElementById("paymentChart"), chartConfig);
