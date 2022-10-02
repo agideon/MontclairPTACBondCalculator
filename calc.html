@@ -38,7 +38,12 @@ This is based upon expected bond sales:
 <P><canvas id="paymentChart"></canvas></P>
 
 <script>
-  // This is the code which may be changed to "fit" with the HTML
+  // This is the code which may be changed to "fit" with the HTML.
+  // This script block is likely to change if the HTML elements of
+  // the page are being changed or if this code is moved to a new
+  // HTML page (with different elements).
+
+
   document.addEventListener("DOMContentLoaded", () => populateInitialValues("avgHomeValue", "myHomeValue"));
   function computeValues()
   {
@@ -54,8 +59,11 @@ This is based upon expected bond sales:
 </script>
 
 <script>
-  // These are values which aren't code, but which are subject to 
-  // change.
+  // This script block contains values used in the computations.  These are 
+  // data and subject to change as new/better data becomes available.  If
+  // this data were especially dynamic we could pull this from an API, but
+  // I don't expect that to be needed.  It should be sufficient to change
+  // these as we learn more, which shouldn't be too frequent an event.
 
   const avgHomeValue = 628952; // Average house value
   const coffeeCost = 1.50; // Cost of a cup of coffee
@@ -72,10 +80,11 @@ This is based upon expected bond sales:
 
 
 <script>
-  // This is mostly HTML-free, with the exception of the header of the table.
+  // This script block contains actual code, subject to change only
+  // by a JS programer.  There's nothing specific to the HTML content of
+  // the page here with the exception of the header of the table.
   // I left that in here because that is coupled with the content of the table.
-  // That is: change the table's columns and the header must also be changed.  
-
+  // That is: change the table's generated columns and the header must also be changed.  
 
   const moneyFormat = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
   const coffeeFormat = new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 });
@@ -151,7 +160,7 @@ This is based upon expected bond sales:
 		"<TD>" + moneyFormat.format(amount) +
 		"</TR>";
     }  
-}
+  }
 
 
   // Set up initial values: Average home value, payment tables, etc.
