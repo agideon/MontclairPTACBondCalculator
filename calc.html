@@ -136,10 +136,12 @@ This is based upon expected bond sales:
   function displayTranches(targetElementName)
   {
     let table = document.getElementById(targetElementName);
-    table.innerHTML = "<TH>Year<TH>Duration of Bonds<TH>Annual Increase for Repayment";
+    table.innerHTML = "<TH><TH>Year of Sale<TH>Duration of Bonds<TH>Annual Increase for Repayment";
     for (const tranch of tranches)
     {
-      table.innerHTML += "<TR><TD>" + tranch.firstYear.toString() +
+      table.innerHTML += "<TR style=\"color: " + tranch.color + ";\">" +
+                "<TD>" + tranch.label +
+                "<TD>" + tranch.firstYear.toString() +
 		"<TD>" + tranch.years.toString() +
 		"<TD>" + moneyFormat.format(tranch.amount) +
 		"</TR>";
