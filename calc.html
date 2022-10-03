@@ -117,7 +117,7 @@ This is based upon expected bond sales:
     {
       for (let year = tranche.firstYear; year < (tranche.firstYear + tranche.years); year++)
       {
-        addToCost(year, tranche.amount);
+        addToCost(year + 1, tranche.amount);
       }
     }
   }
@@ -220,7 +220,7 @@ This is based upon expected bond sales:
       for (let year = tranche.firstYear; year < (tranche.firstYear + tranche.years); year++)
       {
         amount = tranche.amount * ratio;
-	data.set(year, amount);
+	data.set(year + 1, amount);
       }
       thisDataSet.set('data', Object.fromEntries(data));
       chartDatasets.push(Object.fromEntries(thisDataSet));
