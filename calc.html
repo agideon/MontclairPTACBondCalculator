@@ -32,6 +32,7 @@ For a home assessed at
 <P>
 <Table id="annualCosts">
 </Table>
+<Div>Average Cost: <span id="averageCost"></Span></Div>
 </P>
 <P>
 This is based upon expected bond sales:
@@ -51,6 +52,7 @@ This is based upon expected bond sales:
   function computeValues()
   {
     displayAnnualCosts("myHomeValue", "annualCosts"); // Display table of values
+    displayAverageCost("myHomeValue", "averageCost");
     displayTranches("myHomeValue", "bondSales"); // Display expected bond sales
     buildChartData("myHomeValue", "paymentChart"); // Build graphical chart
   }
@@ -120,6 +122,27 @@ This is based upon expected bond sales:
         addToCost(year + 1, tranche.amount);
       }
     }
+
+  }
+
+  function displayAverageCost(homeValueElementName, targetElementName)
+  {
+    const myHomeValue = document.getElementById(homeValueElementName).value; // Is this a number?
+    const ratio = myHomeValue / avgHomeValue; // Is this a number?
+
+    // Compute average cost
+    let totalCost = 0.0;
+    let numberOfYears = 0.0;
+    for (const [year, amount] of annualCost)
+    {
+        numberOfYears++;
+        totalCost += amount;
+    }
+    const averageCost = (totalCost / numberOfYears) * ratio;
+
+    // Display the computed average cost
+    let targetElement = document.getElementById(targetElementName);
+    targetElement.innerHTML = moneyFormat.format(averageCost);
   }
 
   // Display a table of bond repayments
