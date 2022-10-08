@@ -1,0 +1,49 @@
+<Html>
+<Head>
+</Head>
+<Body BGColor="White">
+
+
+<P>
+This will provide an estimate of the change in your property tax payments based upon your
+home's value.  It starts with the average home value in Montclair, <span id="avgHomeValue"></span>,
+but you can enter your own value.  It provides the estimated first year increase and estimated average 
+increase over the lifetime of the bonds.  These are subject change as they are based upon estimates of
+the interest rate at the time of the bond sale as well as the amount of the individual sales which are
+dependent upon the scheduling of various projects which must be fit within the academic schedule as
+well as the schedules of vendors and suppliers of materials.
+<P>
+Note that this does not (yet) account for any of the savings expected to result from this much-needed and 
+long-delayed investment (eg. reduced energy costs, reduced maintenance costs, etc.).
+<P>
+For a home assessed at 
+<Input Type="number" id="myHomeValue" value="0">
+(<button id="dowork">Compute</button>), the expected increase for the first year is 
+<span id="firstYearIncrease"></span>
+and the average increase over the lifetime of the bonds is
+<span id="averageYearlyIncrease"></span>.
+</P>
+<P>
+
+<script>
+  // This is the code which may be changed to "fit" with the HTML.
+  // This script block is likely to change if the HTML elements of
+  // the page are being changed or if this code is moved to a new
+  // HTML page (with different elements).
+  document.addEventListener("DOMContentLoaded", () => 
+    {
+      populateInitialValues("avgHomeValue", "myHomeValue"); 
+      computeValues()
+    });
+
+  function computeValues()
+  {
+    computeValuesTo("myHomeValue", "firstYearIncrease", "averageYearlyIncrease");
+  }
+
+  // What event(s) trigger computation:
+  document.getElementById("dowork").onclick = computeValues;
+  document.getElementById("myHomeValue").oninput = computeValues;
+</script>
+
+<script src="simplecalc.js"></script>
