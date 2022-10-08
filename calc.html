@@ -48,7 +48,14 @@ This is based upon expected bond sales:
   // HTML page (with different elements).
 
 
-  document.addEventListener("DOMContentLoaded", () => populateInitialValues("avgHomeValue", "myHomeValue"));
+  document.addEventListener("DOMContentLoaded", () => 
+    { 
+      populateInitialValues("avgHomeValue", "myHomeValue"); 
+      // Do initial display, the same work that is done when a new home value
+      // is entered.
+      computeValues();
+    });
+
   function computeValues()
   {
     displayAnnualCosts("myHomeValue", "annualCosts"); // Display table of values
@@ -203,9 +210,6 @@ This is based upon expected bond sales:
     let myHomeValueElement = document.getElementById(homeValueElementName);
     myHomeValueElement.value = avgHomeValue;
 
-    // Do initial display, the same work that is done when a new home value
-    // is entered.
-    computeValues();
   }
 
 
