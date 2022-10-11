@@ -1,24 +1,18 @@
 <Html>
 <Head>
+  <Style>
+    p { font-size: 24px; }
+    input { font-size: 20px; width: 110px; }
+  </Style>
 </Head>
 <Body BGColor="White">
 
 
 <P>
-This will provide an estimate of the change in your property tax payments based upon your
-home's value.  It starts with the average home value in Montclair, <span id="avgHomeValue"></span>,
-but you can enter your own value.  It provides the estimated first year increase and estimated average 
-increase over the lifetime of the bonds.  These are subject change as they are based upon estimates of
-the interest rate at the time of the bond sale as well as the amount of the individual sales which are
-dependent upon the scheduling of various projects which must be fit within the academic schedule as
-well as the schedules of vendors and suppliers of materials.
-<P>
-Note that this does not (yet) account for any of the savings expected to result from this much-needed and 
-long-delayed investment (eg. reduced energy costs, reduced maintenance costs, etc.).
-<P>
+The average home value in Montclair is <span id="avgHomeValue"></span>.
 For a home assessed at 
-<Input Type="number" id="myHomeValue" value="0">
-(<button id="dowork">Compute</button>), the expected increase for the first year is 
+<Input Type="number" id="myHomeValue" value="0">, 
+the expected increase for the first year is 
 <span id="firstYearIncrease"></span>
 and the average increase over the lifetime of the bonds is
 <span id="averageYearlyIncrease"></span>.
@@ -42,8 +36,57 @@ and the average increase over the lifetime of the bonds is
   }
 
   // What event(s) trigger computation:
-  document.getElementById("dowork").onclick = computeValues;
+//  document.getElementById("dowork").onclick = computeValues;
   document.getElementById("myHomeValue").oninput = computeValues;
 </script>
 
-<script src="simplecalc.js"></script>
+<script>
+  // This code block contains values used in the computations.  These are 
+  // data and subject to change as new/better data becomes available.  If
+  // this data were especially dynamic we could pull this from an API, but
+  // I don't expect that to be needed.  It should be sufficient to change
+  // these as we learn more, which shouldn't be too frequent an event.
+
+  const avgHomeValue = 628952; // Average house value
+  const avgHomeFirstYearIncrease = 258;
+  const avgHomeAverageYearlyIncrease = 732;
+</script>
+
+
+<script>
+  // This code block contains actual code, subject to change only
+  // by a JS programer.  There's nothing specific to the HTML content of
+  // the page here with the exception of the header of the table.
+  // I left that in here because that is coupled with the content of the table.
+  // That is: change the table's generated columns and the header must also be changed.  
+
+  const moneyFormat = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+
+  function computeValuesTo(homeValueElementName, firstYearIncreaseElementName, averageYearlyIncreaseElementName)
+  {
+    // Should these next two data be validated?
+    const myHomeValue = document.getElementById(homeValueElementName).value; // Is this a number?
+    const ratio = myHomeValue / avgHomeValue; // Is this a number?
+
+    let firstYearIncreaseElement = document.getElementById(firstYearIncreaseElementName);
+    firstYearIncreaseElement.innerHTML = moneyFormat.format(avgHomeFirstYearIncrease * ratio);
+
+    let averageYearlyIncreaseElement = document.getElementById(averageYearlyIncreaseElementName);
+    averageYearlyIncreaseElement.innerHTML = moneyFormat.format(avgHomeAverageYearlyIncrease * ratio);
+  }
+
+
+  // Set up initial values: Average home value, payment tables, etc.
+  function populateInitialValues(avgHomeValueElementName, homeValueElementName)
+  {
+    // Put average home price on the page
+    let avgHomeValueElement = document.getElementById(avgHomeValueElementName);
+    avgHomeValueElement.innerHTML = moneyFormat.format(avgHomeValue);
+
+    // Set the initial value of "my home value" to the average home price
+    let myHomeValueElement = document.getElementById(homeValueElementName);
+    myHomeValueElement.value = avgHomeValue;
+  }
+
+
+</script>
