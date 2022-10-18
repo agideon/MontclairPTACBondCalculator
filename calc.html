@@ -80,13 +80,84 @@ This is based upon expected bond sales:
   const avgHomeValue = 628952; // Average house value
   const coffeeCost = 1.50; // Cost of a cup of coffee
 
+  let tranche1 = [
+  {year: 2023,	amount: 258},
+  {year: 2024,	amount: 258},
+  {year: 2025,	amount: 330},
+  {year: 2026,	amount: 330},
+  {year: 2027,	amount: 330},
+  {year: 2028,	amount: 330},
+  {year: 2029,	amount: 330},
+  {year: 2030,	amount: 330},
+  {year: 2031,	amount: 330},
+  {year: 2032,	amount: 330},
+  {year: 2033,	amount: 330},
+  {year: 2034,	amount: 330},
+  {year: 2035,	amount: 330},
+  {year: 2036,	amount: 330},
+  {year: 2037,	amount: 330},
+  {year: 2038,	amount: 330},
+  {year: 2039,	amount: 330},
+  {year: 2040,	amount: 330},
+  {year: 2041,	amount: 330},
+  {year: 2042,	amount: 330},
+  ];
+
+  let tranch2 = [
+  {year: 2025, amount: 239},
+  {year: 2026, amount: 239},
+  {year: 2027, amount: 290},
+  {year: 2028, amount: 289},
+  {year: 2029, amount: 289},
+  {year: 2030, amount: 290},
+  {year: 2031, amount: 290},
+  {year: 2032, amount: 289},
+  {year: 2033, amount: 289},
+  {year: 2034, amount: 290},
+  {year: 2035, amount: 289},
+  {year: 2036, amount: 290},
+  {year: 2037, amount: 290},
+  {year: 2038, amount: 290},
+  {year: 2039, amount: 289},
+  {year: 2040, amount: 289},
+  {year: 2041, amount: 290},
+  {year: 2042, amount: 290},
+  {year: 2043, amount: 282},
+  {year: 2044, amount: 271},
+];
+
+  let tranch3 = [
+  {year: 2027, amount: 230},
+  {year: 2028, amount: 230},
+  {year: 2029, amount: 279},
+  {year: 2030, amount: 279},
+  {year: 2031, amount: 279},
+  {year: 2032, amount: 279},
+  {year: 2033, amount: 279},
+  {year: 2034, amount: 279},
+  {year: 2035, amount: 279},
+  {year: 2036, amount: 279},
+  {year: 2037, amount: 279},
+  {year: 2038, amount: 279},
+  {year: 2039, amount: 279},
+  {year: 2040, amount: 279},
+  {year: 2041, amount: 279},
+  {year: 2042, amount: 279},
+  {year: 2043, amount: 279},
+  {year: 2044, amount: 277},
+  {year: 2045, amount: 266},
+  {year: 2046, amount: 255},
+];
+
+
   // Table of payments based upon expected bond sales
   let tranches = [ 
-	{firstYear: 2023, years: 20, amount: 258, label: "first tranche", color: "rgba(255,0,0,0.5)"}, 
-	{firstYear: 2025, years: 20, amount: 311, label: "second tranche", color: "rgba(0,255,0,0.5)"},
-	{firstYear: 2027, years: 20, amount: 281, label: "third tranche", color: "rgba(0,0,255,0.5)"}, 
-	{firstYear: 2029, years: 20, amount: 49,  label: "fourth tranche", color: "rgba(128,128,0,0.5)"}, 
+	{payments: tranche1, label: "first tranche", color: "rgba(255,0,0,0.5)"}, 
+	{payments: tranche2, label: "second tranche", color: "rgba(0,255,0,0.5)"},
+	{payments: tranche3, label: "third tranche", color: "rgba(0,0,255,0.5)"}, 
 	];
+
+
 
 
 </script>
