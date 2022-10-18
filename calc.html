@@ -103,7 +103,7 @@ This is based upon expected bond sales:
   {year: 2042,	amount: 330},
   ];
 
-  let tranch2 = [
+  let tranche2 = [
   {year: 2025, amount: 239},
   {year: 2026, amount: 239},
   {year: 2027, amount: 290},
@@ -126,7 +126,7 @@ This is based upon expected bond sales:
   {year: 2044, amount: 271},
 ];
 
-  let tranch3 = [
+  let tranche3 = [
   {year: 2027, amount: 230},
   {year: 2028, amount: 230},
   {year: 2029, amount: 279},
@@ -156,9 +156,6 @@ This is based upon expected bond sales:
 	{payments: tranche2, label: "second tranche", color: "rgba(0,255,0,0.5)"},
 	{payments: tranche3, label: "third tranche", color: "rgba(0,0,255,0.5)"}, 
 	];
-
-
-
 
 </script>
 
@@ -195,12 +192,11 @@ This is based upon expected bond sales:
     // that year's total.
     for (const tranche of tranches)
     {
-      for (let year = tranche.firstYear; year < (tranche.firstYear + tranche.years); year++)
+      for (const payment of tranche.payments)
       {
-        addToCost(year + 1, tranche.amount);
+        addToCost(payment.year, payment.amount);
       }
     }
-
   }
 
   function displayAverageCost(homeValueElementName, targetElementName)
@@ -246,25 +242,26 @@ This is based upon expected bond sales:
     }
   }
 
-
   // Display the table of expected bond sales
+  // Disabled for now as this would be a more complex table and likely too
+  // large for the web page (though I will reconsider this later).
   function displayTranches(homeValueElementName, targetElementName)
   {
-    const myHomeValue = document.getElementById(homeValueElementName).value; // Is this a number?
-    const ratio = myHomeValue / avgHomeValue; // Is this a number?
+//    const myHomeValue = document.getElementById(homeValueElementName).value; // Is this a number?
+//    const ratio = myHomeValue / avgHomeValue; // Is this a number?
 
-    let table = document.getElementById(targetElementName);
-    table.innerHTML = "<TH><TH>Year of Sale<TH>Duration of Bonds<TH>Annual Increase for Repayment";
-    for (const tranche of tranches)
-    {
-      let amount = tranche.amount * ratio;
-      table.innerHTML += "<TR style=\"color: " + tranche.color + ";\">" +
-                "<TD>" + tranche.label +
-                "<TD>" + tranche.firstYear.toString() +
-		"<TD>" + tranche.years.toString() +
-		"<TD>" + moneyFormat.format(amount) +
-		"</TR>";
-    }  
+//    let table = document.getElementById(targetElementName);
+//    table.innerHTML = "<TH><TH>Year of Sale<TH>Duration of Bonds<TH>Annual Increase for Repayment";
+//    for (const tranche of tranches)
+//    {
+//      let amount = tranche.amount * ratio;
+//      table.innerHTML += "<TR style=\"color: " + tranche.color + ";\">" +
+//                "<TD>" + tranche.label +
+//                "<TD>" + tranche.firstYear.toString() +
+//		"<TD>" + tranche.years.toString() +
+//		"<TD>" + moneyFormat.format(amount) +
+//		"</TR>";
+//    }  
   }
 
 
@@ -315,10 +312,11 @@ This is based upon expected bond sales:
       thisDataSet.set('backgroundColor', tranche.color);
       thisDataSet.set('label', tranche.label);
       let data = new Map();
-      for (let year = tranche.firstYear; year < (tranche.firstYear + tranche.years); year++)
+//      for (let year = tranche.firstYear; year < (tranche.firstYear + tranche.years); year++)
+      for (const payment of tranche.payments)
       {
-        amount = tranche.amount * ratio;
-	data.set(year + 1, amount);
+        amount = payment.amount * ratio;
+	data.set(payment.year, amount);
       }
       thisDataSet.set('data', Object.fromEntries(data));
       chartDatasets.push(Object.fromEntries(thisDataSet));
