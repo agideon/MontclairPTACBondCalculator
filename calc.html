@@ -309,7 +309,6 @@ For a home assessed at
       thisDataSet.set('backgroundColor', tranche.color);
       thisDataSet.set('label', tranche.label);
       const data = new Map();
-//      for (const year = tranche.firstYear; year < (tranche.firstYear + tranche.years); year++)
       for (const payment of tranche.payments)
       {
         amount = payment.amount * ratio;
