@@ -77,7 +77,7 @@ For a home assessed at
   const avgHomeValue = 628952; // Average house value
   const coffeeCost = 1.50; // Cost of a cup of coffee
 
-  let tranche1 = [
+  const tranche1 = [
   {year: 2023,	amount: 258},
   {year: 2024,	amount: 258},
   {year: 2025,	amount: 330},
@@ -100,7 +100,7 @@ For a home assessed at
   {year: 2042,	amount: 330},
   ];
 
-  let tranche2 = [
+  const tranche2 = [
   {year: 2025, amount: 239},
   {year: 2026, amount: 239},
   {year: 2027, amount: 290},
@@ -123,7 +123,7 @@ For a home assessed at
   {year: 2044, amount: 271},
 ];
 
-  let tranche3 = [
+  const tranche3 = [
   {year: 2027, amount: 230},
   {year: 2028, amount: 230},
   {year: 2029, amount: 279},
@@ -148,7 +148,7 @@ For a home assessed at
 
 
   // Table of payments based upon expected bond sales
-  let tranches = [ 
+  const tranches = [ 
 	{payments: tranche1, label: "first tranche", color: "rgba(255,0,0,0.5)"}, 
 	{payments: tranche2, label: "second tranche", color: "rgba(0,255,0,0.5)"},
 	{payments: tranche3, label: "third tranche", color: "rgba(0,0,255,0.5)"}, 
@@ -166,7 +166,7 @@ For a home assessed at
 
   const moneyFormat = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
   const coffeeFormat = new Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 });
-  let annualCost = new Map();
+  const annualCost = new Map();
 
   // From the tranches, determine each year's costs
   function buildCostTable()
@@ -212,7 +212,7 @@ For a home assessed at
     const averageCost = (totalCost / numberOfYears) * ratio;
 
     // Display the computed average cost
-    let targetElement = document.getElementById(targetElementName);
+    const targetElement = document.getElementById(targetElementName);
     targetElement.innerHTML = moneyFormat.format(averageCost);
   }
 
@@ -222,15 +222,15 @@ For a home assessed at
     const myHomeValue = document.getElementById(homeValueElementName).value; // Is this a number?
     const ratio = myHomeValue / avgHomeValue; // Is this a number?
 
-    let table = document.getElementById(targetElementName);
+    const table = document.getElementById(targetElementName);
     table.innerHTML = "<TR><TH>Year<TH>Amount<TH>Daily Amount<TH>Cups of Coffee</TR>"; // Header for table
 
     for (const [year, amount] of annualCost)
     {
         // Should test the product of amount and ratio for isNaN()
-	let annualAmount = amount * ratio;
-	let dailyAmount = annualAmount / 365;
-	let coffeeAmount = dailyAmount / coffeeCost;
+	const annualAmount = amount * ratio;
+	const dailyAmount = annualAmount / 365;
+	const coffeeAmount = dailyAmount / coffeeCost;
 	table.innerHTML += "<TR><TD>" + year.toString() + 
 		"<TD>" + moneyFormat.format(annualAmount) + 
 		"<TD>" + moneyFormat.format(dailyAmount) + 
@@ -268,11 +268,11 @@ For a home assessed at
     buildCostTable(); // From the tranche sales, determine annual payments for average home
 
     // Put average home price on the page
-    let avgHomeValueElement = document.getElementById(avgHomeValueElementName);
+    const avgHomeValueElement = document.getElementById(avgHomeValueElementName);
     avgHomeValueElement.innerHTML = moneyFormat.format(avgHomeValue);
 
     // Set the initial value of "my home value" to the average home price
-    let myHomeValueElement = document.getElementById(homeValueElementName);
+    const myHomeValueElement = document.getElementById(homeValueElementName);
     myHomeValueElement.value = avgHomeValue;
 
   }
@@ -299,17 +299,17 @@ For a home assessed at
   // Build the dynamic data for the graphical chart and (re)display that chart
   function buildChartData(homeValueElementName, chartDisplayElementName)
   {
-    let chartData = new Map();
+    const chartData = new Map();
     const myHomeValue = document.getElementById(homeValueElementName).value; // Is this a number?
     const ratio = myHomeValue / avgHomeValue; // Is this a number?
-    let chartDatasets = [];
+    const chartDatasets = [];
     for (const tranche of tranches)
     {
-      let thisDataSet = new Map();
+      const thisDataSet = new Map();
       thisDataSet.set('backgroundColor', tranche.color);
       thisDataSet.set('label', tranche.label);
-      let data = new Map();
-//      for (let year = tranche.firstYear; year < (tranche.firstYear + tranche.years); year++)
+      const data = new Map();
+//      for (const year = tranche.firstYear; year < (tranche.firstYear + tranche.years); year++)
       for (const payment of tranche.payments)
       {
         amount = payment.amount * ratio;
